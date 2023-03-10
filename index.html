@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1066px;
+            height: 579px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.wms.js"></script>
+        <script src="data/vida_0.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-23.237491763185837,-76.36445169112135],[-9.338709617756884,-50.73480835882255]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_vida_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_dept'] !== null ? autolinker.link(feature.properties['nom_dept'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_prov'] !== null ? autolinker.link(feature.properties['nom_prov'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_mun'] !== null ? autolinker.link(feature.properties['nom_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CODIGO'] !== null ? autolinker.link(feature.properties['CODIGO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_mun'] !== null ? autolinker.link(feature.properties['cod_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cat_sec'] !== null ? autolinker.link(feature.properties['cat_sec'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MacroRegio'] !== null ? autolinker.link(feature.properties['MacroRegio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area_km2'] !== null ? autolinker.link(feature.properties['area_km2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area_ha'] !== null ? autolinker.link(feature.properties['area_ha'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gid_macr'] !== null ? autolinker.link(feature.properties['gid_macr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GID'] !== null ? autolinker.link(feature.properties['GID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['region'] !== null ? autolinker.link(feature.properties['region'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_mun'] !== null ? autolinker.link(feature.properties['_mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_cod.mun'] !== null ? autolinker.link(feature.properties['_cod.mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_pobl.2012'] !== null ? autolinker.link(feature.properties['_pobl.2012'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_pobl.rura'] !== null ? autolinker.link(feature.properties['_pobl.rura'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_ccss.mun'] !== null ? autolinker.link(feature.properties['_ccss.mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_pobRurCs'] !== null ? autolinker.link(feature.properties['_pobRurCs'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_com.mun'] !== null ? autolinker.link(feature.properties['_com.mun'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_a.prod.mu'] !== null ? autolinker.link(feature.properties['_a.prod.mu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_aProdMun2'] !== null ? autolinker.link(feature.properties['_aProdMun2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_upas.agri'] !== null ? autolinker.link(feature.properties['_upas.agri'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_supUpaAgr'] !== null ? autolinker.link(feature.properties['_supUpaAgr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_upa.ganad'] !== null ? autolinker.link(feature.properties['_upa.ganad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_supUpaGan'] !== null ? autolinker.link(feature.properties['_supUpaGan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_upaAgrope'] !== null ? autolinker.link(feature.properties['_upaAgrope'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_sUpaAgrop'] !== null ? autolinker.link(feature.properties['_sUpaAgrop'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['_i.sistVid'] !== null ? autolinker.link(feature.properties['_i.sistVid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitude'] !== null ? autolinker.link(feature.properties['latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitude'] !== null ? autolinker.link(feature.properties['longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_vida_0_0() {
+            return {
+                pane: 'pane_vida_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_vida_0');
+        map.getPane('pane_vida_0').style.zIndex = 400;
+        map.getPane('pane_vida_0').style['mix-blend-mode'] = 'normal';
+        var layer_vida_0 = new L.geoJson(json_vida_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_vida_0',
+            layerName: 'layer_vida_0',
+            pane: 'pane_vida_0',
+            onEachFeature: pop_vida_0,
+            style: style_vida_0_0,
+        });
+        bounds_group.addLayer(layer_vida_0);
+        map.addLayer(layer_vida_0);
+        map.createPane('pane_Actividades_Agricolas_1');
+        map.getPane('pane_Actividades_Agricolas_1').style.zIndex = 401;
+        var layer_Actividades_Agricolas_1 = L.WMS.layer("http://siip.produccion.gob.bo:8080/geoserver/comAgrico/wms?version=1.1.0&layers=comAgrico:Actividades_Forestales", "Actividades_Agricolas", {
+            pane: 'pane_Actividades_Agricolas_1',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_Actividades_Agricolas_1);
+        map.createPane('pane_Actividades_Ganadera_2');
+        map.getPane('pane_Actividades_Ganadera_2').style.zIndex = 402;
+        var layer_Actividades_Ganadera_2 = L.WMS.layer("http://siip.produccion.gob.bo:8080/geoserver/comAgrico/wms?version=1.1.0&layers=comAgrico:Actividades_Forestales", "Actividades_Ganadera", {
+            pane: 'pane_Actividades_Ganadera_2',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_Actividades_Ganadera_2);
+        map.createPane('pane_Actividades_Mineras_3');
+        map.getPane('pane_Actividades_Mineras_3').style.zIndex = 403;
+        var layer_Actividades_Mineras_3 = L.WMS.layer("http://siip.produccion.gob.bo:8080/geoserver/comAgrico/wms?version=1.1.0&layers=comAgrico:Actividades_Forestales", "Actividades_Mineras", {
+            pane: 'pane_Actividades_Mineras_3',
+            format: 'image/png',
+            uppercase: true,
+            transparent: true,
+            continuousWorld : true,
+            tiled: true,
+            info_format: 'text/html',
+            opacity: 1,
+            identify: false,
+            attribution: '',
+        });
+        map.addLayer(layer_Actividades_Mineras_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{"Actividades_Mineras": layer_Actividades_Mineras_3,"Actividades_Ganadera": layer_Actividades_Ganadera_2,"Actividades_Agricolas": layer_Actividades_Agricolas_1,'<img src="legend/vida_0.png" /> vida': layer_vida_0,}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>
